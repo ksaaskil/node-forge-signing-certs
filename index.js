@@ -6,14 +6,14 @@ const caKeyPath = __dirname + "/ca.key";
 
 const createCsr = () => {
   console.log("Generating 2048-bit key-pair...");
-  var keys = forge.pki.rsa.generateKeyPair(2048);
+  const keys = forge.pki.rsa.generateKeyPair(2048);
   console.log("Key-pair created.");
 
   // openssl req -new -config ../openssl.cnf -key smime.key -out smime.csr
   // Note: Doesn't actually use .cnf, read in .key or output .csr; done in-memory
   // Note: Could skip creating a CSR here if you're the one generating the keys
   console.log("Creating certification request (CSR) ...");
-  var csr = forge.pki.createCertificationRequest();
+  const csr = forge.pki.createCertificationRequest();
   csr.publicKey = keys.publicKey;
   csr.setSubject([
     {
