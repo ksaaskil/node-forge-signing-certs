@@ -1,8 +1,8 @@
 const forge = require("node-forge");
 const fs = require("fs");
 
-const caCrtPath = __dirname + "/ca.crt";
-const caKeyPath = __dirname + "/ca.key";
+const caCrtPath = __dirname + "/certs/ca.crt";
+const caKeyPath = __dirname + "/certs/ca.key";
 
 const createCsr = () => {
   console.log("Generating 2048-bit key-pair...");
@@ -135,20 +135,16 @@ const create = () => {
 
   const signedPem = forge.pki.certificateToPem(cert);
 
-  // These should match:
-  // openssl rsa -noout -modulus -in server.key | openssl md5
-  // openssl x509 -noout -modulus -in server.crt | openssl md5
-
-  fs.writeFileSync(__dirname + "/server.key", pem.privateKey);
-  fs.writeFileSync(__dirname + "/server.crt", signedPem);
-
   return { privateKey: pem.privateKey, signedCrt: signedPem };
 };
 
 const main = () => {
   const { privateKey, signedCrt } = create();
-  const privateKeyOutput = __dirname + "/server.key";
-  const publicCertOutput = __dirname + "/server.crt";
+  // These should match:
+  // openssl rsa -noout -modulus -in server.key | openssl md5
+  // openssl x509 -noout -modulus -in server.crt | openssl md5
+  const privateKeyOutput = __dirname + "/certs/server.key";
+  const publicCertOutput = __dirname + "/certs/server.crt";
   console.log(`Writing to ${privateKeyOutput}`);
   fs.writeFileSync(privateKeyOutput, privateKey);
   console.log(`Writing to ${publicCertOutput}`);

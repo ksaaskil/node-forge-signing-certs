@@ -13,13 +13,13 @@ yarn
 Create `ca.key`:
 
 ```bash
-openssl genrsa -out ca.key 2048
+openssl genrsa -out certs/ca.key 2048
 ```
 
 Create `ca.crt`:
 
 ```bash
-openssl req -x509 -new -nodes -key ca.key -subj "/CN=${DOMAIN}" -days 10000 -out ca.crt
+openssl req -x509 -new -nodes -key certs/ca.key -subj "/CN=${DOMAIN}" -days 10000 -out certs/ca.crt
 ```
 
 ### Generate server certificates signed by CA
